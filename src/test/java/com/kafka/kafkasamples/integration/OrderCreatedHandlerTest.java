@@ -5,6 +5,7 @@ import static org.mockito.Mockito.*;
 import com.kafka.kafkasamples.TestEventData;
 import com.kafka.kafkasamples.service.DispatchService;
 import java.util.UUID;
+import java.util.concurrent.ExecutionException;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -17,7 +18,7 @@ class OrderCreatedHandlerTest {
     private DispatchService serviceMock;
 
     @Test
-    void listen() {
+    void listen() throws Exception {
         var payload = TestEventData.buildCratedEvent(UUID.randomUUID(), "scissors");
         handler.listen(payload);
 

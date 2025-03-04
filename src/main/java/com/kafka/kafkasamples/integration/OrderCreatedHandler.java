@@ -2,6 +2,7 @@ package com.kafka.kafkasamples.integration;
 
 import com.kafka.kafkasamples.message.OrderCreated;
 import com.kafka.kafkasamples.service.DispatchService;
+import java.util.concurrent.ExecutionException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -22,6 +23,10 @@ public class OrderCreatedHandler {
     )
     public void listen(OrderCreated payload) {
         log.info("Received message {}", payload);
-        service.process(payload);
+        try {
+            service.process(payload);
+        } catch (Exception e) {
+            log.error("Processing failure", e);
+        }
     }
 }
